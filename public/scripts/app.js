@@ -55,7 +55,6 @@ function render () {
 
 function handleSuccess(json) {
   allBooks = json;
-  console.log(json);
   render();
 }
 
