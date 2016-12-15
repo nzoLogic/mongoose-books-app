@@ -5,10 +5,9 @@
 var express = require('express'),
   bodyParser = require('body-parser'),
   db = require('./models');
-
+// console.log(db.Author);
 // generate a new express app and call it 'app'
 var app = express();
-
 // serve static files in public
 app.use(express.static('public'));
 
@@ -23,11 +22,12 @@ app.get('/', function (req, res) {
 // get all books
 app.get('/api/books', function (req, res) {
   // send all books as JSON response
-  db.Book.find(function(err, books){
-    if (err) { return console.log("index error: " + err); }
-    res.json(books);
+  db.Book.find()
+    .populate('author').exec(function(err, books){
+      if(err){console.log('error on author');}
+      res.json(books);
+    });
   });
-});
 
 // get one book
 app.get('/api/books/:id', function (req, res) {
